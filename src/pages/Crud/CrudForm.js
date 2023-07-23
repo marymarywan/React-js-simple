@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function CrudForm() {
     const [customerId, setCustomerId] = useState('');
@@ -10,18 +11,47 @@ function CrudForm() {
     const [customerFaxNumber, setCustomerFaxNumber] = useState('');
     const [customerEmail, setCustomerEmail] = useState('');
 
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const myloaction = (e) => {
+        e.preventDefault();
+        navigate('Crud')
+    }
+
+
+    const deleteData = async (e) => {
+        e.preventDefault();
+        try {
+            await axios.delete(`http://localhost:8800/api/customer/${customerId}`)
+            navigate('/Crud')
+            console.log(`Data with Id ${customerId} has been deleted"`)
+        } catch(err){
+            console.log(err)
+        }
+    }
+
+
  
-    const saveCustomer = (e) => {
+    const saveCustomer = async (e) => {
         e.preventDefault();
 
         const data = {
-            customerid: customerId,
-            customername: customerName,
-            customeraddress: customerAddress,
-            customerpostnumber: customerPostNumber,
-            customerphonenumber: customerPhoneNumber,
-            customerfaxnumber: customerFaxNumber,
-            customeremail: customerEmail,
+            "id": customerId,
+            "name": customerName,
+            "address": customerAddress,
+            "post": customerPostNumber,
+            "phone": customerPhoneNumber,
+            "fax": customerFaxNumber,
+            "email": customerEmail,
+        }
+
+        try{
+            await axios.put(`http://localhost:8800/api/customer`, data)
+            navigate('/Crud')
+            console.log(`Data has been added"`)
+        }catch(error){
+            console.log(error)
         }
 
     }
@@ -69,10 +99,10 @@ function CrudForm() {
                         <button type="submit" className="btn btn-primary" onSubmit={saveCustomer}>บันทึก</button>
                     </div>
                     <div className="col">
-                        <button type="button" className="btn btn-warning">แก้ไข</button>
+                        <button type="submit" className="btn btn-warning">แก้ไข</button>
                     </div>
                     <div className="col">
-                        <button type="button" className="btn btn-danger">ลบ</button>
+                        <button type="submit" onClick={deleteData} className="btn btn-danger">ลบ</button>
                     </div>
                 </div>
             </div>

@@ -8,7 +8,7 @@ function CrudTable() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios.get("http://localhost:8800/api/customer/get")
+                const res = await axios.get("http://localhost:8800/api/customer")
                 setResponse(res.data)
             } catch (error) {
                 console.log(error)
@@ -17,6 +17,10 @@ function CrudTable() {
 
         fetchData();
     }, [])
+
+    
+
+    
 
     return(
         <table className="table table-dark">
@@ -33,15 +37,15 @@ function CrudTable() {
            </thead>
            <tbody>
             {
-                response.map((data) =>(
-                    <tr>
-                        <th scope="row">{data.id}</th>
-                        <td>{data.name}</td>
-                        <td>{data.address}</td>
-                        <td>{data.post}</td>
-                        <td>{data.phone}</td>
-                        <td>{data.fax}</td>
-                        <td>{data.email}</td>
+                response.map((data, index) =>(
+                    <tr key={index}>
+                        <th scope="row" key={index}>{data.id}</th>
+                        <td key={index}>{data.name}</td>
+                        <td key={index}>{data.address}</td>
+                        <td key={index}>{data.post}</td>
+                        <td key={index}>{data.phone}</td>
+                        <td key={index}>{data.fax}</td>
+                        <td key={index}>{data.email}</td>
                     </tr>
                 ))
             }
