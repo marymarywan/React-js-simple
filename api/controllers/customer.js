@@ -29,19 +29,10 @@ export const deletePost = (req, res) => {
 }
 
 export const post = (req, res) => {
-    const q = "INSERT INTO customer(`id`, `name`, `address`, `post`, `phone`, `fax`, `email`) VALUES (?)";
+    const q = "INSERT INTO customer SET ?";
 
-    const value = [
-        req.body.id,
-        req.body.name,
-        req.body.address,
-        req.body.post,
-        req.body.phone,
-        req.body.fax,
-        req.body.email
-    ]
-
-    db.query(q, [value], (err, row)=>{
+    const params = req.body
+    db.query(q, params, (err, row)=>{
         if(err) return res.send(err)
 
         return res.send(`The data id ${req.params.id} has been added`)

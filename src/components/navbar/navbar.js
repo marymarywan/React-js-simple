@@ -6,7 +6,8 @@ import GradeView from '../../pages/GradeView/Grade'
 import ErrorView from '../../pages/ErrorView/ErrorView'
 import CalculatorView from '../../pages/CalculatorView/CalculorView'
 import NavbarCollapse from 'react-bootstrap/esm/NavbarCollapse'
-import CrudView from '../../pages/Crud/CrudView'
+import CrudView from '../../pages/CrudView/CrudView'
+import PdfViewer from '../../utils/pdfViewer'
 
 function NavbarApplication() {
     let activeClassName = "nav-link active"
@@ -22,6 +23,7 @@ function NavbarApplication() {
                             <NavLink to="/" className={({ isActive }) => isActive ? activeClassName : unactiveClassName}>Grade</NavLink>
                             <NavLink to="Calculator" className={({ isActive }) => isActive ? activeClassName : unactiveClassName}>Calculator</NavLink>
                             <NavLink to="Crud" className={({ isActive}) => isActive ? activeClassName : unactiveClassName}>Crud</NavLink>
+                            
 
                         </NavbarCollapse>
                     </Nav>
@@ -30,6 +32,7 @@ function NavbarApplication() {
             </div>
 
             <Routes>
+                <Route path='Pdf' element={<PdfViewer/> } />
                 <Route path='/' element={<GradeView />} />
                 <Route path='Calculator' element={<CalculatorView />} />
                 <Route path='Crud' element={<CrudView />} />
